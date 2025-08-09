@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone - Professional Gaming Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(64, 224, 208, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #40e0d0, #48cae4, #0077b6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(64, 224, 208, 0.3);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .logo::before {
+            content: '⚡';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover::before {
+            opacity: 1;
+            left: -40px;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #40e0d0;
+            border-color: #40e0d0;
+            transform: translateY(-2px);
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(15, 15, 35, 0.98);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(64, 224, 208, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding: 1rem 0;
+            margin-top: 5px;
+            pointer-events: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 10px;
+            z-index: 999;
+        }
+
+        .dropdown-category {
+            padding: 0.8rem 1.5rem;
+            color: #40e0d0;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(64, 224, 208, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(64, 224, 208, 0.1);
+            color: #40e0d0;
+            border-left-color: #40e0d0;
+            transform: translateX(5px);
+        }
+
+        /* Previne interferența cu alte elemente */
+        .nav-links .dropdown > a {
+            position: relative;
+            z-index: 1001;
+        }
+
+        .nav-links .dropdown > a::after {
+            content: ' ▾';
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links .dropdown:hover > a::after {
+            opacity: 1;
+            transform: rotate(180deg);
+        }
+
+        .cart-icon {
+            background: linear-gradient(45deg, #0077b6, #40e0d0);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(64, 224, 208, 0.3);
+        }
+
+        .cart-icon:hover {
+            background: linear-gradient(45deg, #40e0d0, #48cae4);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(64, 224, 208, 0.4);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
+        }
+
+        main {
+            padding: 2rem 0 4rem 0;
+        }
+
+        .page {
+            display: none;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(64, 224, 208, 0.1);
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #40e0d0);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(64,224,208,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #40e0d0, #48cae4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: rgba(26, 26, 46, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(64, 224, 208, 0.2);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #40e0d0, #48cae4, #0077b6);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: -200% 0; }
+            50% { background-position: 200% 0; }
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(64, 224, 208, 0.2);
+            border-color: rgba(64, 224, 208, 0.4);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9rem;
+            border: 1px solid rgba(64, 224, 208, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '🖼️';
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+        }
+
+        .product-description {
+            color: #b0b0b0;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #40e0d0, #48cae4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-specs {
+            background: rgba(64, 224, 208, 0.1);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(64, 224, 208, 0.2);
+            color: #e0e0e0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #0077b6, #40e0d0);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+            box-shadow: 0 6px 20px rgba(64, 224, 208, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #40e0d0, #48cae4);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(64, 224, 208, 0.4);
+        }
+
+        .cart-page {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(64, 224, 208, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            border-color: rgba(64, 224, 208, 0.3);
+            transform: translateX(5px);
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 12px;
+            margin-right: 1.5rem;
+            border: 1px solid rgba(64, 224, 208, 0.1);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .cart-item-price {
+            color: #40e0d0;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0 1.5rem;
+        }
+
+        .quantity-btn {
+            background: rgba(64, 224, 208, 0.2);
+            border: 1px solid rgba(64, 224, 208, 0.3);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #40e0d0;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: rgba(64, 224, 208, 0.3);
+            transform: scale(1.1);
+        }
+
+        .remove-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: linear-gradient(45deg, #ff5252, #ff1744);
+            transform: scale(1.05);
+        }
+
+        .cart-total {
+            background: linear-gradient(135deg, #0077b6, #40e0d0);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px rgba(64, 224, 208, 0.3);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem;
+            color: #888;
+        }
+
+        .categories {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid rgba(64, 224, 208, 0.3);
+            color: #40e0d0;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: linear-gradient(45deg, #0077b6, #40e0d0);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(64, 224, 208, 0.3);
+        }
+
+        /* About Us Styles */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .about-section {
+            background: rgba(26, 26, 46, 0.6);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(64, 224, 208, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-section h3 {
+            color: #40e0d0;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(64, 224, 208, 0.3);
+            padding: 1rem;
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #40e0d0;
+            box-shadow: 0 0 15px rgba(64, 224, 208, 0.3);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #888;
+        }
+
+        /* Partners Section Styles */
+        .partners-section {
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border: 1px solid rgba(64, 224, 208, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .partners-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(45deg, #40e0d0, #48cae4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .partner-item {
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(64, 224, 208, 0.1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .partner-item:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(64, 224, 208, 0.4);
+            box-shadow: 0 15px 40px rgba(64, 224, 208, 0.2);
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 12px;
+            margin: 0 auto 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(64, 224, 208, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo:hover img {
+            transform: scale(1.1);
+        }
+
+        .partner-name {
+            font-weight: 600;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .partner-description {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Placeholder pentru parteneri fără imagine */
+        .partner-logo.placeholder::before {
+            content: '🤝';
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .partners-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .partners-section {
+                margin-top: 2rem;
+                padding: 2rem 0;
+            }
+        }
+
+        /* Email notification styles */
+        .order-confirmation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 15, 35, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 25px;
+            border: 1px solid rgba(64, 224, 208, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            color: #e0e0e0;
+            text-align: center;
+            min-width: 400px;
+            display: none;
+        }
+
+        .order-confirmation.show {
+            display: block;
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: none;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+    </style>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo" onclick="showPage('home')">GameZone Pro</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Acasă</a></li>
+                <li class="dropdown">
+                    <a href="#" onclick="showPage('products')">Produse</a>
+                    <div class="dropdown-content">
+                        <div class="dropdown-category">Categorii Gaming</div>
+                        <a href="#" class="dropdown-item" onclick="showPage('products'); filterProducts('pc')">🖥️ PC Gaming</a>
+                        <a href="#" class="dropdown-item" onclick="showPage('products'); filterProducts('console')">🎮 Console</a>
+                        <a href="#" class="dropdown-item" onclick="showPage('products'); filterProducts('accesorii')">🎧 Accesorii</a>
+                        <a href="#" class="dropdown-item" onclick="showPage('products'); filterProducts('monitoare')">📺 Monitoare</a>
+                        <a href="#" class="dropdown-item" onclick="showPage('products'); filterProducts('componente')">⚙️ Componente</a>
+                    </div>
+                </li>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+            </ul>
+            <button class="cart-icon" onclick="showPage('cart')">
+                🛒 Coș
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Modal pentru confirmarea comenzii -->
+        <div class="modal-overlay" id="modalOverlay" onclick="closeOrderModal()"></div>
+        <div class="order-confirmation" id="orderConfirmation">
+            <h3 style="color: #40e0d0; margin-bottom: 1rem;">✅ Comanda Trimisă!</h3>
+            <p>Comanda ta a fost trimisă cu succes!</p>
+            <p>Vei primi un email de confirmare în scurt timp.</p>
+            <button class="btn" style="max-width: 200px; margin-top: 1.5rem;" onclick="closeOrderModal()">OK</button>
+        </div>
+
+        <!-- Pagina Principală -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>🚀 GameZone Professional</h1>
+                <p>Echipamente gaming premium pentru performanță maximă</p>
+            </div>
+            
+            <h2 class="section-title">🔥 Produse Populare & Trending</h2>
+            <div class="products-grid" id="featuredProducts"></div>
+        </section>
+
+        <!-- Pagina Produse -->
+        <section id="products" class="page">
+            <h2 class="section-title">🎮 Catalogul Complet</h2>
+            
+            <div class="categories">
+                <button class="category-btn active" onclick="filterProducts('toate')">Toate Produsele</button>
+                <button class="category-btn" onclick="filterProducts('pc')">🖥️ PC Gaming</button>
+                <button class="category-btn" onclick="filterProducts('console')">🎮 Console</button>
+                <button class="category-btn" onclick="filterProducts('accesorii')">🎧 Accesorii</button>
+                <button class="category-btn" onclick="filterProducts('monitoare')">📺 Monitoare</button>
+                <button class="category-btn" onclick="filterProducts('componente')">⚙️ Componente</button>
+            </div>
+            
+            <div class="products-grid" id="allProducts"></div>
+        </section>
+
+        <!-- Coșul de Cumpărături -->
+        <section id="cart" class="page">
+            <div class="cart-page">
+                <h2 class="section-title">🛒 Coșul Tău de Cumpărături</h2>
+                <div id="cartItems"></div>
+                <div id="cartTotal" class="cart-total" style="display: none;">
+                    <h3>Total: <span id="totalPrice">0</span> RON</h3>
+                    <button class="btn" id="checkoutBtn" style="max-width: 300px; margin: 1rem auto;" onclick="processOrder()">
+                        📧 Trimite Comanda
+                    </button>
+                </div>
+                <div id="emptyCart" class="empty-cart">
+                    <h3>🛒 Coșul tău este gol</h3>
+                    <p>Descoperă produsele noastre premium</p>
+                    <button class="btn" onclick="showPage('products')" style="max-width: 250px; margin: 2rem auto;">
+                        🛍️ Explorează Produsele
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us (Despre Noi + Contact) -->
+        <section id="about" class="page">
+            <h2 class="section-title">🏢 About GameZone Professional</h2>
+            
+            <div class="about-grid">
+                <div class="about-section">
+                    <h3>🎯 Despre Noi</h3>
+                    <p>GameZone Professional este liderul în domeniul echipamentelor gaming premium. Cu o experiență de peste 10 ani în industrie, oferim soluții complete pentru gamerii pasionați și profesioniști.</p>
+                    
+                    <h4 style="color: #48cae4; margin: 1.5rem 0 1rem 0;">✨ De ce GameZone Pro?</h4>
+                    <ul style="padding-left: 1.5rem; line-height: 2;">
+                        <li>🏆 Produse premium de cea mai înaltă calitate</li>
+                        <li>⚡ Livrare express în 24-48 ore</li>
+                        <li>🛡️ Garanție extinsă și suport tehnic</li>
+                        <li>💰 Prețuri competitive și oferte exclusive</li>
+                        <li>🎮 Consultanță specializată gaming</li>
+                    </ul>
+                </div>
+
+                <div class="about-section">
+                    <h3>📞 Contact Professional</h3>
+                    <div style="margin-bottom: 2rem;">
+                        <p><strong>🏢 Sediul Central:</strong> Str. Gaming Elite Nr. 123, București</p>
+                        <p><strong>📱 Telefon:</strong> +40 123 456 789</p>
+                        <p><strong>✉️ Email:</strong> contact@gamezone-pro.ro</p>
+                        <p><strong>🕒 Program:</strong> L-V: 9:00-19:00, S: 10:00-17:00</p>
+                        <p><strong>🌐 Support:</strong> 24/7 Online</p>
+                    </div>
+                    
+                    <h4 style="color: #48cae4; margin-bottom: 1rem;">💬 Trimite-ne un Mesaj</h4>
+                    <form class="contact-form" onsubmit="sendContactMessage(event)">
+                        <input type="text" name="name" placeholder="Numele tău complet" required>
+                        <input type="email" name="email" placeholder="Adresa ta de email" required>
+                        <input type="tel" name="phone" placeholder="Numărul tău de telefon">
+                        <textarea name="message" rows="4" placeholder="Mesajul tău / Întrebarea ta" required></textarea>
+                        <button type="submit" class="btn">📧 Trimite Mesajul</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secțiunea Parteneri -->
+        <div class="partners-section">
+            <div class="container">
+                <h2 class="partners-title">🤝 Partenerii Noștri de Încredere</h2>
+                <div class="partners-grid" id="partnersGrid">
+                    <!-- Partenerii vor fi încărcați aici din JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Inițializare EmailJS (înlocuiește cu datele tale)
+        (function(){
+            emailjs.init("YOUR_EMAILJS_USER_ID"); // Înlocuiește cu User ID-ul tău
+        })();
+
+        // PARTENERI - EDITEAZĂ AICI PARTENERII TĂI
+        const partners = [
+            {
+                id: 1,
+                name: "ASUS ROG",
+                description: "Echipamente gaming premium",
+                image: "", // Adaugă URL-ul imaginii aici
+                link: "https://rog.asus.com"
+            },
+            {
+                id: 2,
+                name: "NVIDIA",
+                description: "Plăci grafice RTX",
+                image: "", // Adaugă URL-ul imaginii aici
+                link: "https://nvidia.com"
+            },
+            {
+                id: 3,
+                name: "Intel",
+                description: "Procesoare gaming",
+                image: "", // Adaugă URL-ul imaginii aici
+                link: "https://intel.com"
+            },
+            {
+                id: 4,
+                name: "Corsair",
+                description: "Accesorii gaming RGB",
+                image: "", // Adaugă URL-ul imaginii aici
+                link: "https://corsair.com"
+            },
+            {
+                id: 5,
+                name: "Razer",
+                description: "Periferice gaming",
+                image: "", // Adaugă URL-ul imaginii aici
+                link: "https://razer.com"
+            },
+            {
+                id: 6,
+                name: "SteelSeries",
+                description: "Căști și mouse gaming",
+                image: "", // Adaugă URL-ul imaginii aici
+                link: "https://steelseries.com"
+            }
+        ];
+
+        // Date pentru produse - EDITEAZĂ AICI PRODUSELE TALE
+        const products = [
+            {
+                id: 1,
+                name: "RTX 4090 Gaming Beast",
+                category: "pc",
+                price: 12999,
+                description: "PC gaming ultra high-end cu RTX 4090, perfect pentru gaming 4K și streaming profesional",
+                specs: "RTX 4090 24GB, Intel i9-13900K, 64GB DDR5 RAM, 2TB NVMe SSD, Custom Loop Cooling",
+                featured: true,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 2,
+                name: "PlayStation 5 Pro Bundle",
+                category: "console",
+                price: 3299,
+                description: "Consola next-gen PS5 cu controller suplimentar și jocuri premium",
+                specs: "825GB SSD, Ray Tracing, 4K Gaming, Controller DualSense + Extra Controller",
+                featured: true,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 3,
+                name: "ASUS ROG Monitor 4K 144Hz",
+                category: "monitoare",
+                price: 2899,
+                description: "Monitor gaming profesional 32\" 4K cu 144Hz refresh rate",
+                specs: "32\", 4K UHD, 144Hz, HDR1000, G-Sync Ultimate, IPS Panel",
+                featured: true,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 4,
+                name: "Corsair K95 RGB Platinum",
+                category: "accesorii",
+                price: 899,
+                description: "Tastatură mecanică premium cu Cherry MX switches și iluminare RGB avansată",
+                specs: "Cherry MX Speed Silver, RGB per-key, Media Controls, Aircraft-grade Aluminum",
+                featured: false,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 5,
+                name: "Logitech G Pro X Superlight",
+                category: "accesorii",
+                price: 699,
+                description: "Mouse gaming wireless ultra-light pentru competiții eSports",
+                specs: "25600 DPI HERO Sensor, 63g Weight, 70h Battery, POWERPLAY Compatible",
+                featured: false,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 6,
+                name: "SteelSeries Arctis Pro Wireless",
+                category: "accesorii",
+                price: 1299,
+                description: "Căști gaming wireless premium cu Hi-Res Audio și DTS",
+                specs: "Hi-Res Audio, DTS Headphone:X 2.0, Dual Battery System, ClearCast Mic",
+                featured: true,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 7,
+                name: "Intel Core i9-13900KS",
+                category: "componente",
+                price: 2899,
+                description: "Procesorul cel mai rapid pentru gaming și content creation",
+                specs: "24 Cores, 32 Threads, 6.0GHz Boost, 36MB Cache, LGA1700",
+                featured: false,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 8,
+                name: "NVIDIA RTX 4080 Super",
+                category: "componente",
+                price: 5999,
+                description: "Placă grafică high-end pentru gaming 4K și Ray Tracing",
+                specs: "16GB GDDR6X, 2565MHz Boost, Ray Tracing Gen 3, DLSS 3",
+                featured: false,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 9,
+                name: "Xbox Series X Elite",
+                category: "console",
+                price: 2799,
+                description: "Consola Microsoft next-gen cu performanță 4K nativă",
+                specs: "1TB SSD, 4K Gaming, Quick Resume, Smart Delivery, Game Pass Ultimate",
+                featured: false,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            },
+            {
+                id: 10,
+                name: "Samsung Odyssey G9 49\"",
+                category: "monitoare",
+                price: 4999,
+                description: "Monitor gaming ultra-wide curbat pentru experiență imersivă maximă",
+                specs: "49\", 5120x1440, 240Hz, 1ms, HDR1000, Quantum Dot, G-Sync",
+                featured: false,
+                image: "" // Adaugă URL-ul imaginii tale aici
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'toate';
+
+        // Funcții pentru navigare
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        // Funcții pentru parteneri
+        function renderPartners() {
+            const partnersContainer = document.getElementById('partnersGrid');
+            partnersContainer.innerHTML = '';
+            
+            partners.forEach(partner => {
+                const partnerElement = document.createElement('a');
+                partnerElement.href = partner.link;
+                partnerElement.target = '_blank';
+                partnerElement.rel = 'noopener noreferrer';
+                partnerElement.className = 'partner-item';
+                
+                const logoElement = partner.image ? 
+                    `<div class="partner-logo">
+                        <img src="${partner.image}" alt="${partner.name}">
+                    </div>` :
+                    `<div class="partner-logo placeholder"></div>`;
+                
+                partnerElement.innerHTML = `
+                    ${logoElement}
+                    <div class="partner-name">${partner.name}</div>
+                    <div class="partner-description">${partner.description}</div>
+                `;
+                
+                partnersContainer.appendChild(partnerElement);
+            });
+        }
+
+        // Funcții pentru produse
+        function renderProducts(productsToRender, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const imageElement = product.image ? 
+                    `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 15px; margin-bottom: 1.5rem;">` :
+                    `<div class="product-image">Adaugă imaginea pentru<br>${product.name}</div>`;
+                
+                productCard.innerHTML = `
+                    ${imageElement}
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-specs">📋 ${product.specs}</div>
+                    <div class="product-price">${product.price.toLocaleString()} RON</div>
+                    <button class="btn" onclick="addToCart(${product.id})">
+                        🛒 Adaugă în Coș
+                    </button>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        function filterProducts(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            const filteredProducts = category === 'toate' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            renderProducts(filteredProducts, 'allProducts');
+        }
+
+        // Funcții pentru coș
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartUI();
+            
+            // Animație pentru feedback
+            if (event && event.target) {
+                const button = event.target;
+                const originalBg = button.style.background;
+                const originalText = button.textContent;
+                
+                button.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                button.textContent = '✅ Adăugat!';
+                
+                setTimeout(() => {
+                    button.style.background = originalBg;
+                    button.textContent = originalText;
+                }, 1500);
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const emptyCart = document.getElementById('emptyCart');
+            const totalPrice = document.getElementById('totalPrice');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '';
+                cartTotal.style.display = 'none';
+                emptyCart.style.display = 'block';
+            } else {
+                emptyCart.style.display = 'none';
+                cartTotal.style.display = 'block';
+                
+                cartItems.innerHTML = cart.map(item => {
+                    const imageElement = item.image ? 
+                        `<img src="${item.image}" alt="${item.name}" style="width: 100px; height: 100px; object-fit: cover;">` :
+                        `<div style="width: 100px; height: 100px; background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666; margin-right: 1.5rem;">Imagine</div>`;
+                    
+                    return `
+                        <div class="cart-item">
+                            ${imageElement}
+                            <div class="cart-item-info">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div class="cart-item-price">${item.price.toLocaleString()} RON</div>
+                            </div>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                                <span style="color: #40e0d0; font-weight: bold; min-width: 30px; text-align: center;">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${item.id})">🗑️ Șterge</button>
+                        </div>
+                    `;
+                }).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalPrice.textContent = total.toLocaleString();
+            }
+        }
+
+        // Funcție pentru procesarea comenzii cu EmailJS
+        function processOrder() {
+            if (cart.length === 0) return;
+            
+            const orderDetails = cart.map(item => 
+                `${item.name} x${item.quantity} - ${(item.price * item.quantity).toLocaleString()} RON`
+            ).join('\n');
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const templateParams = {
+                to_email: 'admin@gamezone-pro.ro', // Email-ul tău pentru primirea comenzilor
+                order_details: orderDetails,
+                total_amount: total.toLocaleString(),
+                order_date: new Date().toLocaleString('ro-RO'),
+                customer_message: 'Comandă nouă primită prin website'
+            };
+            
+            // Trimite emailul (înlocuiește cu Service ID și Template ID din EmailJS)
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showOrderConfirmation();
+                    cart = []; // Golește coșul după comandă
+                    updateCartUI();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('Eroare la trimiterea comenzii. Te rugăm să încerci din nou sau să ne contactezi direct.');
+                });
+        }
+
+        function showOrderConfirmation() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('orderConfirmation').classList.add('show');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('orderConfirmation').classList.remove('show');
+        }
+
+        // Funcție pentru mesajele de contact
+        function sendContactMessage(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const templateParams = {
+                to_email: 'contact@gamezone-pro.ro', // Email-ul tău
+                from_name: formData.get('name'),
+                from_email: formData.get('email'),
+                phone: formData.get('phone'),
+                message: formData.get('message')
+            };
+            
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_CONTACT_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    alert('✅ Mesajul tău a fost trimis cu succes! Îți vom răspunde în curând.');
+                    form.reset();
+                }, function(error) {
+                    alert('❌ Eroare la trimiterea mesajului. Te rugăm să încerci din nou.');
+                });
+        }
+
+        // Inițializare
+        document.addEventListener('DOMContentLoaded', function() {
+            const featuredProducts = products.filter(product => product.featured);
+            renderProducts(featuredProducts, 'featuredProducts');
+            renderProducts(products, 'allProducts');
+            renderPartners();
+            updateCartUI();
+            
+            // Închide dropdown-ul când se face click în altă parte
+            document.addEventListener('click', function(event) {
+                const dropdowns = document.querySelectorAll('.dropdown-content');
+                const isDropdownClick = event.target.closest('.dropdown');
+                
+                if (!isDropdownClick) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.style.opacity = '0';
+                        dropdown.style.visibility = 'hidden';
+                        dropdown.style.transform = 'translateY(-10px)';
+                        dropdown.style.pointerEvents = 'none';
+                    });
+                }
+            });
+
+            // Previne închiderea dropdown-ului când se face click pe el
+            document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                dropdown.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+    </script>
+
+    <!-- 
+    ================================================================
+    INSTRUCȚIUNI COMPLETE PENTRU CONFIGURARE ȘI DEPLOY PE GIT:
+    ================================================================
+    
+    📁 STRUCTURA FIȘIERELOR PENTRU GIT:
+    your-repo/
+    ├── index.html (acest fișier)
+    ├── README.md (opțional)
+    └── images/ (folder pentru imagini - opțional)
+    
+    🚀 DEPLOY PE GITHUB PAGES:
+    1. Creează un repository nou pe GitHub
+    2. Uploadează acest fișier ca "index.html"
+    3. Mergi la Settings > Pages
+    4. Alege "Deploy from a branch" > "main" > "/ (root)"
+    5. Site-ul va fi live la: https://username.github.io/repository-name
+    
+    ⚙️ CONFIGURARE EMAILJS (pentru comenzi automate):
+    1. Creează cont gratuit pe https://www.emailjs.com/
+    2. Adaugă un service email (Gmail, Outlook, etc.)
+    3. Creează template-uri pentru comenzi și contact
+    4. Înlocuiește în cod:
+       - "YOUR_EMAILJS_USER_ID" cu Public Key-ul tău
+       - "YOUR_SERVICE_ID" cu Service ID-ul tău
+       - "YOUR_TEMPLATE_ID" cu Template ID pentru comenzi
+       - "YOUR_CONTACT_TEMPLATE_ID" cu Template ID pentru contact
+       - "admin@gamezone-pro.ro" cu email-ul tău
+    
+    🎨 PERSONALIZARE PRODUSE:
+    Editează array-ul 'products' în JavaScript:
+    - Schimbă numele, prețurile, descrierile
+    - Adaugă URL-urile imaginilor în câmpul 'image'
+    - Modifică categoriile (pc, console, accesorii, monitoare, componente)
+    - Setează 'featured: true' pentru produsele trending
+    
+    🤝 PERSONALIZARE PARTENERI:
+    Editează array-ul 'partners' în JavaScript:
+    - Adaugă numele partenerilor
+    - Adaugă URL-urile logourilor în câmpul 'image'
+    - Adaugă link-urile către site-urile partenerilor
+    - Modifică descrierile
+    
+    🏷️ PERSONALIZARE LOGO:
+    Înlocuiește "GameZone Pro" cu numele brandului tău în:
+    <div class="logo" onclick="showPage('home')">NUMELE TĂU</div>
+    
+    Sau folosește o imagine:
+    <img src="logo.png" class="logo" onclick="showPage('home')" alt="Logo">
+    
+    📧 PERSONALIZARE CONTACT:
+    Modifică informațiile de contact în secțiunea "About Us":
+    - Adresa, telefonul, email-ul
+    - Programul de lucru
+    - Orice alte detalii
+    
+    🎯 FUNCȚIONALITĂȚI INCLUSE:
+    ✅ Site responsive (mobile-friendly)
+    ✅ Dropdown menu cu categorii
+    ✅ Sistem de coș de cumpărături
+    ✅ Secțiune parteneri cu link-uri
+    ✅ Sistem de comenzi prin email
+    ✅ Formular de contact
+    ✅ Design dark & profesional
+    ✅ Animații și efecte hover
+    ✅ SEO-friendly structure
+    ✅ Optimizat pentru GitHub Pages
+    
+    📱 TESTARE:
+    - Testează pe desktop și mobile
+    - Verifică toate link-urile
+    - Testează formularul de contact
+    - Verifică că imaginile se încarcă corect
+    
+    🔧 MENTENANȚĂ:
+    - Actualizează produsele regulat
+    - Adaugă parteneri noi
+    - Monitorizează emailurile de comenzi
+    - Actualizează informațiile de contact
+    
+    💡 TIPS:
+    - Folosește imagini optimizate (WebP, max 500KB)
+    - Adaugă favicon.ico pentru branding
+    - Configurează un domeniu custom dacă vrei
+    - Monitorizează traficul cu Google Analytics
+    -->
+</body>
+</html>
